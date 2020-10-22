@@ -9,7 +9,7 @@ some best practices, offering observability and resources to work during the dev
 - [Official documentation](https://docs.micronaut.io/latest/guide/index.html)
 
 ## Application Logic
-This application will bring information about the Star Wars Public API
+This application will bring information about the [Star Wars Public API](https://swapi.dev/)
 
 ## Endpoints
 ### Business
