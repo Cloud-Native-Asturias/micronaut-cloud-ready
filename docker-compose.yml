@@ -22,3 +22,12 @@ services:
       - ./docker-compose/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
       - micronaut-cloud-ready
+
+  grafana:
+    networks: ["starwars-net"]
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+    - "3000:3000"
+    depends_on:
+      - prometheus

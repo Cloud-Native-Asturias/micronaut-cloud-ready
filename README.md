@@ -45,6 +45,17 @@ To stop the docker-compose, just type `Ctrl+c`. To remove the containers created
 ### Setup Grafana
 When you run the Grafana container for the first time, you have to set up the datasource Prometheus. Here the few steps
 to achieve this.
+1. Open your browser on http://localhost:3000 and login with user `admin` and password `admin`.
+2. Go to `Configuration > Data Sources` and click on button `Add data source`
+3. Select Time Series Database `Prometheus`
+4. Fill in the fiels as follows
+    - In URL field, add your local IP (no `localhost`) and port `9090`, for example, `http://192.168.1.15:9090`
+5. Click on `Save & Test` button to confirm the dara source is working
+
+From here, you can test this going to `Explore` menu and running a simple query over metric `http_server_requests_seconds_count`.
+
+**PLEASE NOTE** that, if you run `docker-compose down` this configuration will be lost, and next time you get up the
+containers you should follow the same steps again. 
 
 ## Manual Testing
 Here some examples about how to test the API
