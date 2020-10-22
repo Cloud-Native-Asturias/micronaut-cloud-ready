@@ -98,7 +98,66 @@ And you will get something like this
 ```
 Type `Ctrl+c` to exit and remove the container.
 ### Kubernetes
-TODO
+On this repo you will find the `kubernetes/k8s-dev.yaml` file where all the Kubernetes specs are there. This file contains:
+- ConfigMap: To configure the parameters used by this app
+- Deployment: With the spec fot the Kubernetes deployment and Pods
+- Service: To expose the app and make it reachable for other services within the Kubernetes cluster
+
+### Pre-steps special for minikube
+Once `minikube` is started, run
+```shell script
+eval $(minikube docker-env)
+```
+And then build the docker image as is described before.
+
+Once this, you are ready to deploy this app on `minikube`.
+
+#### Deploy app on Kubernetes
+To deploy the app
+```shell script
+$ kubectl apply -f kubernetes/k8s-dev.yaml
+```
+#### Check deployment
+And confirm it's working, some commands here
+```shell script
+$ kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+micronaut-cloud-ready-577bb65558-8mztx   1/1     Running   0          6s
+```
+```shell script
+$ kubectl get services
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+kubernetes              ClusterIP      10.96.0.1        <none>        443/TCP             107d
+micronaut-cloud-ready   LoadBalancer   10.109.75.180    <pending>     80:31023/TCP        13s
+```
+```shell script
+$ kubectl get configmaps
+NAME                    DATA   AGE
+micronaut-cloud-ready   2      2m16s
+```
+Minikube provides a DNS to expose automatically a service outside of the Kubernetes network
+```shell script
+$ minikube service list
+|----------------------|---------------------------|----------------------------|-------------------------|
+|      NAMESPACE       |           NAME            |        TARGET PORT         |           URL           |
+|----------------------|---------------------------|----------------------------|-------------------------|
+| default              | kubernetes                | No node port               |
+| default              | micronaut-cloud-ready     | micronaut-cloud-ready/8080 | http://172.17.0.2:31774 |
+| kube-system          | kube-dns                  | No node port               |
+| kubernetes-dashboard | dashboard-metrics-scraper | No node port               |
+| kubernetes-dashboard | kubernetes-dashboard      | No node port               |
+|----------------------|---------------------------|----------------------------|-------------------------|
+```
+So, now you know the IP of your service to work with it from your computer
+```shell script
+curl http://172.17.0.2:31941/health
+{"name":"micronaut-cloud-ready","status":"UP","details":{"compositeDiscoveryClient()":{"name":"micronaut-cloud-ready","status":"UP"},"diskSpace":{"name":"micronaut-cloud-ready","status":"UP","details":{"total":250436972544,"free":168236937216,"threshold":10485760}},"service":{"name":"micronaut-cloud-ready","status":"UP"}}}
+```
+#### Delete app on Kubernetes
+To delete the app form the Kubernetes cluster
+```shell script
+$ kubectl delete -f kubernetes/k8s-dev.yaml
+```
 
 ## ChangeLog
 ### 1.0.0
