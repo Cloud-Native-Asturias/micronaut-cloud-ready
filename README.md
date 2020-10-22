@@ -164,6 +164,7 @@ $ kubectl delete -f kubernetes/k8s-dev.yaml
 #### New Features
 - Add endpoint to retrieve people from Star Wars movies
 - Add Dockerfile and instructions to run it
+- Add Kubernetes resources
 #### Changes
 N/A
 #### Bug fixes
