@@ -12,7 +12,12 @@ some best practices, offering observability and resources to work during the dev
 This application will bring information about the Star Wars Public API
 
 ## Endpoints
-TODO
+|Endpoint|Desciption|
+---------|----------|
+|/metrics|Metrics information in JSON format|
+|/prometheus|Metrics information in Prometheus format|
+|/health|Status health of the service in JSON format|
+
 
 ## Metrics
 TODO
