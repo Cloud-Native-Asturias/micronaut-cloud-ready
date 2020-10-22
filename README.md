@@ -25,7 +25,26 @@ This application will bring information about the Star Wars Public API
 |/health|Status health of the service in JSON format|
 
 ## Development
-TODO
+During development, it's very important test and test fast, not only the application but also how it will work when it's
+deployed in production. For that, it's important to test via Docker container and, for doing so, we can use a docker-compose
+file.
+
+The `docker-compose.yml` file will run:
+- Container with the last assembled version of this micronaut-cloud-ready app
+- Container with [Prometheus](https://prometheus.io/) service, to scrape the metrics exposed by the app
+- Container with [Grafana](https://grafana.com/) service, to visualize the metrics scraped by Prometheus from the app
+
+### Run docker-compose
+```shell script
+$ ./gradlew clean assemble && docker-compose up
+```
+- Prometheus is available on http://localhost:9090. Perform some tests on the app API (see chapter above) and wait 30s to query for some metric such as `http_server_requests_seconds_count`
+
+To stop the docker-compose, just type `Ctrl+c`. To remove the containers created, run `docker-compose down`.
+
+### Setup Grafana
+When you run the Grafana container for the first time, you have to set up the datasource Prometheus. Here the few steps
+to achieve this.
 
 ## Manual Testing
 Here some examples about how to test the API

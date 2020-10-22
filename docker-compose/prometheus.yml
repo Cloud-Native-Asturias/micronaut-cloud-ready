@@ -1,0 +1,7 @@
+scrape_configs:
+  - job_name: scrape-micronaut-cloud-ready
+    scrape_interval: 5s
+    metrics_path: /prometheus
+    static_configs:
+      - targets:
+        - micronaut-cloud-ready:8080

@@ -1,0 +1,24 @@
+version: "3.5"
+networks:
+  starwars-net:
+    driver: bridge
+
+services:
+  micronaut-cloud-ready:
+    networks: ["starwars-net"]
+    build: .
+    ports:
+    - "8080:8080"
+
+  prometheus:
+    networks: ["starwars-net"]
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./docker-compose/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - micronaut-cloud-ready
