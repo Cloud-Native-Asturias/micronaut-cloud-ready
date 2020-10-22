@@ -43,15 +43,38 @@ $ curl -vvv http://localhost:8080/starwars/v1/characters
 And the app will run in the default port set on the `application.yaml`
 
 ### Docker
-TODO
-
+#### Build Docker image
+First, let's create the fat Jar
+```shell script
+./gradlew clean assemble
+```
+Now, let's build the docker image
+```shell script
+docker build . -t micronaut-cloud-ready:latest
+```
+Let's confirm it's created
+```shell script
+$ docker images | grep micronaut-cloud-ready
+REPOSITORY                    TAG                 IMAGE ID            CREATED              SIZE
+micronaut-cloud-ready         latest              48306ce0f2c7        53 seconds ago      355MB
+```
+#### Run via Docker container
+```shell script
+$ docker run -it --rm --name my-micronaut-cloud-ready -p 8080:8080 micronaut-cloud-ready:latest
+```
+And you will get something like this
+```shell script
+10:27:41.717 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 1222ms. Server Running: http://2ccd601578e6:8080
+```
+Type `Ctrl+c` to exit and remove the container.
 ### Kubernetes
 TODO
 
 ## ChangeLog
 ### 1.0.0
 #### New Features
-TODO
+- Add endpoint to retrieve people from Star Wars movies
+- Add Dockerfile and instructions to run it
 #### Changes
 N/A
 #### Bug fixes
